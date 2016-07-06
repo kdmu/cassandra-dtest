@@ -54,19 +54,18 @@ class TestCqlTracing(Tester):
             );
         """)
 
-        out, err = node1.run_cqlsh('TRACING ON', return_output=True)
+        out, err, rc = node1.run_cqlsh('TRACING ON')
         self.assertIn('Tracing is enabled', out)
 
-        out, err = node1.run_cqlsh('TRACING ON; SELECT * from system.peers', return_output=True)
+        out, err, rc = node1.run_cqlsh('TRACING ON; SELECT * from system.peers')
         self.assertIn('Tracing session: ', out)
         self.assertIn('Request complete ', out)
 
         # Inserts
-        out, err = node1.run_cqlsh(
+        out, err, rc = node1.run_cqlsh(
             "CONSISTENCY ALL; TRACING ON; "
             "INSERT INTO ks.users (userid, firstname, lastname, age) "
-            "VALUES (550e8400-e29b-41d4-a716-446655440000, 'Frodo', 'Baggins', 32)",
-            return_output=True)
+            "VALUES (550e8400-e29b-41d4-a716-446655440000, 'Frodo', 'Baggins', 32)")
         debug(out)
         self.assertIn('Tracing session: ', out)
 
@@ -78,10 +77,9 @@ class TestCqlTracing(Tester):
         self.assertIn('Request complete ', out)
 
         # Queries
-        out, err = node1.run_cqlsh('CONSISTENCY ALL; TRACING ON; '
+        out, err, rc = node1.run_cqlsh('CONSISTENCY ALL; TRACING ON; '
                                    'SELECT firstname, lastname '
-                                   'FROM ks.users WHERE userid = 550e8400-e29b-41d4-a716-446655440000',
-                                   return_output=True)
+                                   'FROM ks.users WHERE userid = 550e8400-e29b-41d4-a716-446655440000')
         debug(out)
         self.assertIn('Tracing session: ', out)
         # Restricted to 2.2+ due to flakiness on 2.1.  See CASSANDRA-11598 for details.

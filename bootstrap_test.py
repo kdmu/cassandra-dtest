@@ -283,9 +283,8 @@ class TestBootstrap(Tester):
 
         debug("Check data is present")
         # Let's check stream bootstrap completely transferred data
-        stdout, stderr = node3.stress(['read', 'n=100k', 'no-warmup', '-schema',
-                                       'replication(factor=2)', '-rate', 'threads=8'],
-                                      capture_output=True)
+
+        stdout = node3.stress(['read', 'n=100k', 'no-warmup', '-schema', 'replication(factor=2)', '-rate', 'threads=8'])
 
         if stdout is not None:
             self.assertNotIn("FAILURE", stdout)
@@ -403,6 +402,9 @@ class TestBootstrap(Tester):
                           '-rate', 'threads=5',
                           '-errors', 'retries=2'],
                          stdout=tmpfile, stderr=subprocess.STDOUT)
+
+            os.unlink(stress_config.name)
+
             tmpfile.seek(0)
             output = tmpfile.read()
 

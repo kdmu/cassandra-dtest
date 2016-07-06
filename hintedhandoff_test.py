@@ -37,7 +37,7 @@ class TestHintedHandoffConfig(Tester):
         """
         Launch a nodetool command and check there is no error, return the result
         """
-        out, err = node.nodetool(cmd, capture_output=True)
+        out, err, rc = node.nodetool(cmd)
         self.assertEqual('', err)
         return out
 

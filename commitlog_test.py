@@ -159,7 +159,7 @@ class TestCommitLog(Tester):
         self._change_commitlog_perms(0)
 
         with open(os.devnull, 'w') as devnull:
-            self.node1.stress(['write', 'n=1M', 'no-warmup', '-col', 'size=FIXED(1000)', '-rate', 'threads=25'], stdout=devnull, stderr=subprocess.STDOUT)
+            self.node1.stress(['write', 'n=1M', 'no-warmup', '-col', 'size=FIXED(1000)', '-rate', 'threads=25'])
 
     @since('3.0.7')
     def test_mv_lock_contention_during_replay(self):
