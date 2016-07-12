@@ -114,7 +114,7 @@ class TestJMX(Tester):
         node.flush()
         # Run a major compaction. This will be the compaction whose
         # progress we track.
-        node.nodetool('compact')
+        node.nodetool_process('compact')
         # We need to sleep here to give compaction time to start
         # Why not do something smarter? Because if the bug regresses,
         # we can't rely on jmx to tell us that compaction started.
@@ -122,8 +122,6 @@ class TestJMX(Tester):
 
         compaction_manager = make_mbean('db', type='CompactionManager')
         with JolokiaAgent(node) as jmx:
-            # If this gives an index out of bounds, then it is most likely because
-            # there is not a compaction in progress
             progress_string = jmx.read_attribute(compaction_manager, 'CompactionSummary')[0]
 
             # Pause in between reads
