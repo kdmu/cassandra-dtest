@@ -122,6 +122,8 @@ class TestJMX(Tester):
 
         compaction_manager = make_mbean('db', type='CompactionManager')
         with JolokiaAgent(node) as jmx:
+            # If this gives an index out of bounds, then it is most likely because
+            # there is not a compaction in progress
             progress_string = jmx.read_attribute(compaction_manager, 'CompactionSummary')[0]
 
             # Pause in between reads
