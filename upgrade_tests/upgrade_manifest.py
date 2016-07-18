@@ -30,7 +30,7 @@ indev_2_2_x = VersionMeta(name='indev_2_2_x', variant='indev', version='git:cass
 current_2_2_x = VersionMeta(name='current_2_2_x', variant='current', version='2.2.7', min_proto_v=1, max_proto_v=4, java_versions=(7, 8))
 next_2_2_x = None  # None if not yet tagged
 
-indev_3_0_x = VersionMeta(name='indev_3_0_x', variant='indev', version='git:cassandra-3.0', min_proto_v=3, max_proto_v=4, java_versions=(8,))
+indev_3_0_x = VersionMeta(name='indev_3_0_x', variant='indev', version='github:ifesdjeen/12144-3.0', min_proto_v=3, max_proto_v=4, java_versions=(8,))
 current_3_0_x = VersionMeta(name='current_3_0_x', variant='current', version='3.0.8', min_proto_v=3, max_proto_v=4, java_versions=(8,))
 next_3_0_x = None  # None if not yet tagged
 
@@ -38,7 +38,7 @@ indev_3_x = VersionMeta(name='indev_3_x', variant='indev', version='git:cassandr
 current_3_x = VersionMeta(name='current_3_x', variant='current', version='3.7', min_proto_v=3, max_proto_v=4, java_versions=(8,))
 next_3_x = None  # None if not yet tagged
 
-head_trunk = VersionMeta(name='head_trunk', variant='indev', version='git:trunk', min_proto_v=3, max_proto_v=4, java_versions=(8,))
+head_trunk = VersionMeta(name='head_trunk', variant='indev', version='github:ifesdjeen/12144-trunk', min_proto_v=3, max_proto_v=4, java_versions=(8,))
 
 # MANIFEST maps a VersionMeta representing a line/variant to a list of other VersionMeta's representing supported upgrades
 # Note on versions: 2.0 must upgrade to 2.1. Once at 2.1 or newer, upgrade is supported to any later version, including trunk (for now).
@@ -81,9 +81,21 @@ custom_2 = VersionMeta(name='custom_branch_2', variant='indev', version='git:tru
 custom_3 = VersionMeta(name='custom_branch_3', variant='indev', version='git:cassandra-3.5', min_proto_v=3, max_proto_v=4, java_versions=(7, 8))
 custom_4 = VersionMeta(name='custom_branch_4', variant='indev', version='git:cassandra-3.6', min_proto_v=3, max_proto_v=4, java_versions=(7, 8))
 OVERRIDE_MANIFEST = {
-    # EXAMPLE:
-    # custom_1: [custom_2, custom_3],  # creates a test of custom_1 -> custom_2, and another test from custom_1 -> custom_3
-    # custom_3: [custom_4]             # creates a test of custom_3 -> custom_4
+    indev_2_1_x: [indev_3_0_x, head_trunk],
+    current_2_1_x: [indev_3_0_x, head_trunk],
+    next_2_1_x: [indev_3_0_x, head_trunk],
+
+    indev_2_2_x: [indev_3_0_x, head_trunk],
+    current_2_2_x: [indev_3_0_x, head_trunk],
+    next_2_2_x: [indev_3_0_x, head_trunk],
+
+    indev_3_0_x: [head_trunk],
+    current_3_0_x: [head_trunk],
+    next_3_0_x: [head_trunk],
+
+    indev_3_x: [head_trunk],
+    current_3_x: [head_trunk],
+    next_3_x: [head_trunk],
 }
 
 
