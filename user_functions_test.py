@@ -32,6 +32,10 @@ class TestUserFunctions(Tester):
             self.create_ks(session, 'ks', rf)
         return session
 
+
+    @known_failure(failure_source='test',
+                   jira_url='https://issues.apache.org/jira/browse/CASSANDRA-12265',
+                   flaky=True)
     def test_migration(self):
         """ Test migration of user functions """
         cluster = self.cluster
